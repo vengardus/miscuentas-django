@@ -1,0 +1,78 @@
+{% extends general.template_container.container %}
+{% load static %} 
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'styles/lib/datagrid.css' %}">
+<link rel="stylesheet" href="{% static 'styles/categoria/categoria_list.css' %}">
+{% endblock %} 
+
+{% block content %}
+
+<div class="listview">
+    <div class="template__title">
+        <h1>{{ general.listview_title }}</h1>
+    </div>
+
+    <div class="grid__row grid__row__title">
+        {% for element in data.aHeader.0 %} 
+            <div class="grid__col col_{{forloop.counter}}">
+                <div class="grid__data ${class_div_grid__data}">{{element}}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% for categoria in categorias %}
+        {% if forloop.counter|divisibleby:2 == 0 %}
+            <div div class="grid__row ">
+        {% else %}
+            <div div class="grid__row grid__row__striped">
+        {% endif %}
+            <div class="grid__col col_1">
+                <div class="grid__data ${class_div_grid__data}">{{categoria.id}}</div>
+            </div>
+            <div class="grid__col col_2">
+                <div class="grid__data ${class_div_grid__data}">{{categoria.desc}}</div>
+            </div>
+            <div class="grid__col col_3">
+                <div class="grid__data ${class_div_grid__data}">{{categoria.get_aplica_stock}}</div>
+            </div>
+            <div class="grid__col col_4">
+                <div class="grid__data ${class_div_grid__data}">
+                    <abbr title='Editar'>
+                        <span class="material-icons " 
+                        onclick="">
+                        edit</span></abbr>
+                    <abbr title='Eliminar'>
+                        <span class="material-icons " 
+                        onclick="">
+                        delete</span></abbr>
+                </div>
+            </div>
+
+        </div>
+    {% endfor %}
+    {% if is_paginated %}
+
+      {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+
+    {% endif %}
+
+</div>
+
+{% endblock content %}
