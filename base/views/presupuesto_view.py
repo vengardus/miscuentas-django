@@ -33,11 +33,7 @@ def presupuesto_form(request, mode, id):
     url_return = 'presupuesto_list'
     oBModel = BPresupuesto()
 
-    if mode == 'new':
-        form = PresupuestoForm()
-        form.fields['anio'].initial = str(datetime.now().year)
-        form.fields['moneda'].initial = MonedaChoices.moneda_local
-    else:
+    if mode != 'new':
         oTO = oBModel.get(id)
         if oTO == None:
             messages.error(request, f'No se encontraron datos para el id = {id}' )
@@ -46,9 +42,9 @@ def presupuesto_form(request, mode, id):
     if request.method == 'POST':
         # self.context['global_stock_minimo'] = float(oCompania.get_stock_minimo(current_user.license_id))
         if mode == 'new':
-            form = PresupuestoForm(request.POST)
+            form = PresupuestoForm(request, request.POST)
         else:
-            form = PresupuestoForm(request.POST, instance=oTO)
+            form = PresupuestoForm(request, request.POST, instance=oTO)
         if not form.is_valid():
             messages.error(request, 'Error en ingreso de datos')
         elif not oBModel.save(request, mode, id, form.cleaned_data):
@@ -58,9 +54,11 @@ def presupuesto_form(request, mode, id):
             return redirect(url_return)
     else:
         if mode == 'new':
-            form = PresupuestoForm()
+            form = PresupuestoForm(request)
+            form.fields['anio'].initial = str(datetime.now().year)
+            form.fields['moneda'].initial = MonedaChoices.moneda_local
         else:
-            form = PresupuestoForm(instance=oTO)
+            form = PresupuestoForm(request, instance=oTO)
 
     oTemplate = Template(Presupuesto)
     oTemplate.template_container = PARAMS.TemplateContainerMain

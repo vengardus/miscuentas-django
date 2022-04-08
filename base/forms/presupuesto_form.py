@@ -7,15 +7,18 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 #from django.core.exceptions import ValidationError
 from base.models import Presupuesto
+from base.business.bpresconcepto import BPresconcepto
 
  
 class PresupuestoForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, request, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.request = request
         self.set_data()
 
     def set_data(self):
-        pass
+        oBPresconcepto = BPresconcepto()
+        self.fields['presconcepto'].queryset = oBPresconcepto.get_all(self.request.user.license_id)
 
     class Meta:
         model = Presupuesto

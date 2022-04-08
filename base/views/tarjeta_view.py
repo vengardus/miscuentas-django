@@ -40,9 +40,9 @@ def tarjeta_form(request, mode, id):
     if request.method == 'POST':
         # self.context['global_stock_minimo'] = float(oCompania.get_stock_minimo(current_user.license_id))
         if mode == 'new':
-            form = TarjetaForm(request.POST)
+            form = TarjetaForm(request, request.POST)
         else:
-            form = TarjetaForm(request.POST, instance=oTO)
+            form = TarjetaForm(request, request.POST, instance=oTO)
         if not form.is_valid():
             messages.error(request, 'Error en ingreso de datos')
         elif not oBModel.save(request, mode, id, form.cleaned_data):
@@ -52,9 +52,9 @@ def tarjeta_form(request, mode, id):
             return redirect(url_return)
     else:
         if mode == 'new':
-            form = TarjetaForm()
+            form = TarjetaForm(request)
         else:
-            form = TarjetaForm(instance=oTO)
+            form = TarjetaForm(request, instance=oTO)
 
     oTemplate = Template(Tarjeta)
     oTemplate.template_container = PARAMS.TemplateContainerMain

@@ -40,9 +40,9 @@ def presconcepto_form(request, mode, id):
     if request.method == 'POST':
         # self.context['global_stock_minimo'] = float(oCompania.get_stock_minimo(current_user.license_id))
         if mode == 'new':
-            form = PresconceptoForm(request.POST)
+            form = PresconceptoForm(request, request.POST)
         else:
-            form = PresconceptoForm(request.POST, instance=oTO)
+            form = PresconceptoForm(request, request.POST, instance=oTO)
         if not form.is_valid():
             messages.error(request, 'Error en ingreso de datos')
         elif not oBModel.save(request, mode, id, form.cleaned_data):
@@ -52,9 +52,9 @@ def presconcepto_form(request, mode, id):
             return redirect(url_return)
     else:
         if mode == 'new':
-            form = PresconceptoForm()
+            form = PresconceptoForm(request)
         else:
-            form = PresconceptoForm(instance=oTO)
+            form = PresconceptoForm(request, instance=oTO)
 
     oTemplate = Template(Presconcepto)
     oTemplate.template_container = PARAMS.TemplateContainerMain

@@ -6,12 +6,14 @@ __date__
 from django import forms
 from django.utils.translation import gettext_lazy as _
 #from django.core.exceptions import ValidationError
-from base.models import Tarjeta
+from base.models import Tarjeta, Banco
 
  
 class TarjetaForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, request, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.request = request
+        self.fields['banco'].queryset = Banco.objects.filter(license_id=self.request.user.license_id).order_by('desc')
         self.fields['desc'].widget.attrs['autofocus'] = True
 
     class Meta:

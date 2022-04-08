@@ -17,8 +17,8 @@ class PagosVariosForm(forms.ModelForm):
         self.request = request
         print(self.request.user.license_id)
         super().__init__(*args, **kwargs)
-        self.fields['concepto_gasto'].queryset = ConceptoDiario.objects.filter(rubro_diario__is_servicio=True)
-        self.fields['cuenta'].queryset = Cuenta.objects.filter(moneda=MonedaChoices.moneda_local).order_by('desc')
+        self.fields['concepto_gasto'].queryset = ConceptoDiario.objects.filter(rubro_diario__is_servicio=True, license_id=self.request.user.license_id)
+        self.fields['cuenta'].queryset = Cuenta.objects.filter(moneda=MonedaChoices.moneda_local, license_id=self.request.user.license_id).order_by('desc')
         self.set_data()
 
     def set_data(self):

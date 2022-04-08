@@ -15,7 +15,8 @@ from base.views import presrubro_view, presconcepto_view, presupuesto_view
 from base.api import presrubro_api, presconcepto_api, presupuesto_api
 
 urlpatterns = [
-    path('', home_view.main, name='main'),
+    # path('', home_view.main, name='main'),
+    path('', cuenta_view.cuenta_list, name='main'),
     path('login/', login_view.login_app, name='login'),
     path('logout/', login_view.logout_app, name='logout'),
     path('account/', login_view.account, name='account'),

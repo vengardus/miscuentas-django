@@ -5,16 +5,24 @@ __date__
 '''
 from django import forms
 from django.utils.translation import gettext_lazy as _
+from base.business.bpresconcepto import BPresconcepto
 #from django.core.exceptions import ValidationError
 from base.models import Presconcepto
+from base.business.bpresrubro import BPresrubro
+from base.business.btarjeta import BTarjeta
 
  
 class PresconceptoForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, request, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.request = request
         self.set_data()
 
     def set_data(self):
+        oBPresRubro = BPresrubro()
+        oBTarjeta = BTarjeta()
+        self.fields['presrubro'].queryset = oBPresRubro.get_all(self.request.user.license_id)
+        self.fields['tarjeta'].queryset = oBTarjeta.get_all(self.request.user.license_id)
         self.fields['desc'].widget.attrs['autofocus'] = True
 
     class Meta:

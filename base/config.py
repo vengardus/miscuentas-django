@@ -332,7 +332,7 @@ aMenu = [
 
     ('Operaciones Cuentas', '#', [
         ('Cambio Moneda', 'cambiomoneda_list'),
-        ('Pagos Varios', 'pagosvarios_form'),
+        ('Pago Servicios', 'pagosvarios_form'),
         ('Transferencias propias', 'transferenciaspropias_form'),
         ('Movimientos', 'movimiento_list'),
     ]),

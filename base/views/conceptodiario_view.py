@@ -35,9 +35,9 @@ def conceptodiario_form(request, mode, id):
 
     if request.method == 'POST':
         if mode == 'new':
-            form = ConceptoDiarioForm(request.POST)
+            form = ConceptoDiarioForm(request, request.POST)
         else:
-            form = ConceptoDiarioForm(request.POST, instance=oTO)
+            form = ConceptoDiarioForm(request, request.POST, instance=oTO)
         if not form.is_valid():
             messages.error(request, 'Error en ingreso de datos')
         elif not oBModel.save(request, mode, id, form.cleaned_data):
@@ -47,9 +47,9 @@ def conceptodiario_form(request, mode, id):
             return redirect(url_return)
     else:
         if mode == 'new':
-            form = ConceptoDiarioForm()
+            form = ConceptoDiarioForm(request)
         else:
-            form = ConceptoDiarioForm(instance=oTO)
+            form = ConceptoDiarioForm(request, instance=oTO)
 
     oTemplate = Template(ConceptoDiario)
     oTemplate.template_container = PARAMS.TemplateContainerMain

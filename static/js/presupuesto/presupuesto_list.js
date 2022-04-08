@@ -276,7 +276,7 @@ function calcula_presuesto() {
             +       `</div>`
 
             +       `<div class="row">`
-            +       ` <div class="glosa">Total Egresos</div>`
+            +       ` <div class="glosa">Saldo</div>`
             +       ` <div class="number ${danger}">${saldo.toFixed(2)}</div>`
             +       `</div>`
             + `</div>`

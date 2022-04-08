@@ -53,6 +53,7 @@ def pagosvarios_form(request):
     oTemplate.template_container = PARAMS.TemplateContainerMain
     oTemplate.template = PARAMS.Template.pagosvarios_form
     oTemplate.set_template_title(mode)
+    oTemplate.template_title = 'Nuevo Pago Servicio' if mode == 'new' else 'Edit Pago Servicio'
     oTemplate.actions['action_cancel'] = reverse(url_return)
     oTemplate.data['mode'] = mode
     oTemplate.data['id'] = id

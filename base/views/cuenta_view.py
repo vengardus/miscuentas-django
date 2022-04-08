@@ -34,7 +34,7 @@ def cuenta_list(request):
 
 @login_required(login_url='login')
 def cuenta_form(request, mode, id):
-    url_return = 'cuenta_list'
+    url_return = 'main'
     oBModel = BCuenta()
 
     if mode != 'new':
@@ -46,9 +46,9 @@ def cuenta_form(request, mode, id):
     if request.method == 'POST':
         # self.context['global_stock_minimo'] = float(oCompania.get_stock_minimo(current_user.license_id))
         if mode == 'new':
-            form = CuentaForm(request.POST)
+            form = CuentaForm(request, request.POST)
         else:
-            form = CuentaForm(request.POST, instance=oTO)
+            form = CuentaForm(request, request.POST, instance=oTO)
 
         print('---', mode, id)
         if not form.is_valid():
@@ -60,9 +60,9 @@ def cuenta_form(request, mode, id):
             return redirect(url_return)
     else:
         if mode == 'new':
-            form = CuentaForm()
+            form = CuentaForm(request)
         else:
-            form = CuentaForm(instance=oTO)
+            form = CuentaForm(request, instance=oTO)
 
     oTemplate = Template(Cuenta)
     oTemplate.template_container = PARAMS.TemplateContainerMain

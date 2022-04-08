@@ -7,11 +7,13 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 #from django.core.exceptions import ValidationError
 from base.models import Cuenta
-
+from base.business.bbanco import BBanco
  
 class CuentaForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, request, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        oBBanco = BBanco()
+        self.fields['banco'].queryset = oBBanco.get_all(request.user.license_id)
         self.fields['desc'].widget.attrs['autofocus'] = True
 
     class Meta:

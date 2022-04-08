@@ -7,13 +7,16 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 #from django.core.exceptions import ValidationError
 from base.models import ConceptoDiario
+from base.business.brubrodiario import BRubroDiario
 
  
 class ConceptoDiarioForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, request, *args, **kwargs):
         super().__init__(*args, **kwargs)
         print('ed0')
         # self.instance = kwargs.get('instance') if 'instance' in kwargs else None
+        oBRubroDiario = BRubroDiario()
+        self.fields['rubro_diario'].queryset = oBRubroDiario.get_all(request.user.license_id)
         self.fields['desc'].widget.attrs['autofocus'] = True
 
     class Meta:

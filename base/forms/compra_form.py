@@ -7,15 +7,18 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime
 #from django.core.exceptions import ValidationError
-from base.models import Compra
+from base.models import Compra, Tarjeta, Comercio
 
  
 class CompraForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, request, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.request = request
         self.set_data()
 
     def set_data(self):
+        self.fields['tarjeta'].queryset = Tarjeta.objects.filter(license_id=self.request.user.license_id).order_by('desc')
+        self.fields['comercio'].queryset = Comercio.objects.filter(license_id=self.request.user.license_id).order_by('desc')
         self.fields['tarjeta'].widget.attrs['autofocus'] = True
 
     class Meta:

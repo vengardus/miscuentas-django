@@ -52,7 +52,7 @@ class ControllerCustom(Controller):
     def action_refresh(self):
         show_grid_header = self.data['show_grid_header']
         oBModel = BRubroDiario()
-        oBModel.get_all()
+        oBModel.get_all(self.request.user.license_id)
         self.context['aDataTable'] = oBModel.get_aTO_toArray()
         self.context['action_new'] = reverse(self.url_action_new, args=['new', 0]); #'rubrodiario_form'
         self.context['aHeader'] = self.set_grid_columns() if show_grid_header else []
