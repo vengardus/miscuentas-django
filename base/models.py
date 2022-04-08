@@ -37,7 +37,7 @@ class User(AbstractUser):
     status = models.CharField(max_length=1, default='A')
     modo_apariencia = models.CharField(max_length=1, choices = [('0', 'Claro'), ('1', 'Oscuro')], default='0')
 
-    # USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
 
