@@ -12,7 +12,7 @@ def banco_controller(request):
     context = oController.do_action()
     context = JsonResponse(context)
     return context
-
+    
 class ControllerCustom(Controller):
 
     def __init__(self, data, request):

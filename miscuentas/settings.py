@@ -39,7 +39,9 @@ SECRET_KEY = app_env['SECRET_KEY']
 DEBUG = True if app_env['ENV'] == 'dev' else False
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'https://web-production-a399.up.railway.app',
+]
 
 
 # Application definition
@@ -169,3 +171,5 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 django_on_heroku.settings(locals())
 # Puesto a modo Debug para poder subir imagenes al servidor
 DEBUG = True
+
+APPEND_SLASH=False
