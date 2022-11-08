@@ -25,7 +25,7 @@ def login_app(request):
         password = request.POST.get('password')
         print(email, password)
         try:
-            oUser = User.objects.get(email=email)
+            oUser = User.objects.get(username=email)
         except:
             messages.error(request, 'User does not exist.')
         
