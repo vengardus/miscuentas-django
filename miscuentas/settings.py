@@ -40,9 +40,11 @@ DEBUG = True if app_env['ENV'] == 'dev' else False
 
 
 ALLOWED_HOSTS = [
-    'https://web-production-a399.up.railway.app',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+     'https://web-production-a399.up.railway.app',
+]
 
 # Application definition
 
