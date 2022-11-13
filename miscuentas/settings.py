@@ -43,7 +43,7 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-     'https://web-production-a399.up.railway.app',
+     'https://miscuentas-production.up.railway.app',
 ]
 
 # Application definition
